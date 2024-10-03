@@ -1,11 +1,19 @@
 import { api } from "../api"
 
-export const login = async (email: string): Promise<boolean> => {
-    const data: any = await api
+interface UserData {
+    email: string;
+    name: string;
+}
 
-    if(email !== data.email) {
-        return false
+export const login = async (email: string, password: string): Promise<UserData | null> => {
+    const data: any = await api
+    
+    if(email !== data.email || password !== data.password) {
+        return null
     }
 
-    return true
+    return  {
+        email: data.email,
+        name: data.name,
+    };
 }

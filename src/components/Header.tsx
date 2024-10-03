@@ -30,6 +30,12 @@ export const Header  = () => {
             >
               Sair
             </Button>
+           
+            <Button ml='2' bg="green"
+              onClick={e => navigate('/perfil')}
+            >
+              perfil
+            </Button>
           </>
         )
       }
