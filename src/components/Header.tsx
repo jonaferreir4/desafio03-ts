@@ -9,7 +9,7 @@ export const Header  = () => {
   const navigate = useNavigate()
 
   const logout = () => {
-    changeLocalStorage({ login: false})
+    changeLocalStorage({ name: '', token: '' })
     setIsLoggedIn(false)
     navigate('/')
   }

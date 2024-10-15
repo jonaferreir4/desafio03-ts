@@ -13,15 +13,15 @@ const Home = () => {
     const { setIsLoggedIn } = useContext(AppContext)
     const navigate = useNavigate()
 
-    const validateUser = async (email: string, password: string) => {
-        const loggedIn = await login(email, password)
+    const validateUser = async (email: string, password: string): Promise<void> => {
+        const data = await login(email, password)
 
-        if(!loggedIn){
+        if(!data){
             return alert('Email ou senha inválido')
         }
 
         setIsLoggedIn(true)
-        changeLocalStorage({ login: true, })
+        changeLocalStorage(data)
         navigate('/conta/1')
     }
   

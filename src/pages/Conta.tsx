@@ -1,9 +1,9 @@
 import { Center, SimpleGrid, Spinner } from "@chakra-ui/react"
 import { useParams, useNavigate } from "react-router-dom"
 import { useContext, useEffect, useState } from "react"
-import { api } from "../api"
 import CardInfo from "../components/CardInfo"
 import { AppContext } from "../components/AppContext"
+import { getAllLocalStorage  } from '../services/storage'
 
 interface UserData {
     email: string
@@ -20,23 +20,26 @@ const Conta = () => {
 
     const { isLoggedIn } = useContext(AppContext)
 
-    !isLoggedIn && navigate('/')
+    useEffect(() => {
+        !isLoggedIn && navigate('/')
+    }, [isLoggedIn, navigate])
 
     useEffect(() => {
         const getData = async () => {
-            const data: any | UserData = await api
-            setUserData(data)
+            const data: any | UserData = getAllLocalStorage()
+            setUserData(JSON.parse(data))
         }
 
         getData()
     }, [])
 
     const actualData = new Date()
-
-    if(userData && id !== userData.id) {
-        navigate('/')
-    }
-  
+    useEffect(() => {
+        if(userData && id !== userData.id) {
+            navigate('/')
+        }
+    }, [id, navigate, userData])
+    
     return (
         <Center>
             <SimpleGrid columns={2} spacing={8} paddingTop={16}>
@@ -50,7 +53,7 @@ const Conta = () => {
                     (
                         <>
                             <CardInfo mainContent={`Bem vindo ${userData?.name}`} content={`${actualData.getDay()} / ${actualData.getMonth()} / ${actualData.getFullYear()} ${actualData.getHours()}:${actualData.getMinutes()}`} />
-                            <CardInfo mainContent='Saldo' content={`R$ ${userData.balance}`}/>
+                            <CardInfo mainContent='Saldo' content={`R$ 1111,00`}/>
                         </>
                     )
                 }

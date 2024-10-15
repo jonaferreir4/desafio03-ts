@@ -6,14 +6,13 @@ interface UserData {
 }
 
 export const login = async (email: string, password: string): Promise<UserData | null> => {
-    const data: any = await api
-    
-    if(email !== data.email || password !== data.password) {
-        return null
-    }
+    try {
+        const response = await api.post('/login', {email, password})
+        return response.data
 
-    return  {
-        email: data.email,
-        name: data.name,
-    };
+    }catch(e) {
+        console.log(e)
+        return null
+    }   
+
 }

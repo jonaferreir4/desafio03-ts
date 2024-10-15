@@ -1,21 +1,23 @@
-interface IDIoBank {
-    login: boolean;
-    name?: string;
-    email?: string;
+interface ITokenData {
+    name?: string,
+    token?: string
 }
 
-const dioBank = {
-    login: false
+const tokenData = {
+    name: '',
+    token: ''
 }
+
+
 
 export const getAllLocalStorage = (): string | null  => {
-    return localStorage.getItem('diobank')
+    return localStorage.getItem('token-data')
 }
 
 export const createLocalStorage = (): void => {
-    localStorage.setItem('diobank', JSON.stringify(dioBank))
+    localStorage.setItem('token-data', JSON.stringify(tokenData))
 }
 
-export const changeLocalStorage = (dioBank: IDIoBank): void => {
-    localStorage.setItem('diobank', JSON.stringify(dioBank))
+export const changeLocalStorage = (tokenData: ITokenData | null): void => {
+    localStorage.setItem('token-data', JSON.stringify(tokenData))
 }

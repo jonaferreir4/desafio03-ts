@@ -1,13 +1,27 @@
-const conta = {
-    email: 'jona@gmail.com',
-    password: '123456',
-    name: 'Jona Ferreira',
-    balance: 2000.00,
-    id: '1'
-}
+import axios from "axios"
 
-export const api = new Promise((resolve) => {
-    setTimeout(() => {
-        resolve(conta)
-    }, 3000)
+const URL = "http://localhost:5000"
+
+
+export const api = axios.create({
+    baseURL: URL,
+    headers: {
+        "Content-Type": "application/json"
+    },
+    withCredentials: false
+
+})
+
+api.interceptors.request.use((config) => {
+    const tokenData = localStorage.getItem('token-data')
+
+    if(tokenData) {
+        const { token } = JSON.parse(tokenData)
+        if(token) {
+            config.headers. Authorization  = `Bearer ${token}`
+        }
+    }
+    return config
+}, (error) => {
+    return Promise.reject(error)
 })

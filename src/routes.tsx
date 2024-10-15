@@ -8,6 +8,7 @@ import { Perfil } from "./pages/perfil"
 
 const MainRoutes = () => {
     const { isLoggedIn } = useContext(AppContext)
+    console.log(isLoggedIn)
 
     return(
         <Routes>
